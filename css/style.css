@@ -138,3 +138,11 @@ header h1:after {
     margin-right: 30px;
     text-align: left;
 }
+
+.result-box_right i {
+    margin-right: 15px;
+}
+
+.result-box_right i:last-child {
+    margin-right: 0;
+}
