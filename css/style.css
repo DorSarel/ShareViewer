@@ -134,6 +134,7 @@ header h1:after {
 }
 
 .result-box_right {
+    font-size: 120%;
     float: right;
     margin-right: 30px;
     text-align: left;
