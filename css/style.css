@@ -10,6 +10,7 @@ html {
 body {
     background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, .5)), url(img/background.jpg);
     background-size: cover;
+    color: rgb(65, 64, 64);
     font-size: 20px;
     font-family: 'Lato', 'Arial', sans-serif;
     text-rendering: optimizeLegibility;
@@ -32,7 +33,7 @@ header h1 {
 
 header h1:after {
     background-color: #8e44ad;
-    content: "";
+    content: " ";
     display: block;
     width: 200px;
     height: 2px;
@@ -45,24 +46,37 @@ header h1:after {
     position: relative;
 }
 
+.search-form {
+    width: 50%;
+    margin-left: 25%;
+    position: relative;
+}
+
+.search-icon {
+    color: #8e44ad;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
+
 .search-input {
     border: 1px solid #ebdaf3;
     border-radius: 10px;
-    color: #555;
     padding: 8px 12px;
-    width: 50%;
+    width: 100%;
     margin: auto;
+    text-indent: 35px;
 }
 
 .search-input:focus {
     outline: none;
 }
 
-.search-icon {
+/* .search-icon {
     color: #8e44ad;
     font-size: 140%;
     position: absolute;
     top: 8%;
     right: 36%;
     vertical-align: middle;
-}
+} */
