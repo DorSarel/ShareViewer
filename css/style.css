@@ -1,10 +1,11 @@
+/* ======================== */
+/* ===== GENERAL ===== */
+/* ======================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
 }
 
 body {
@@ -22,8 +23,12 @@ body {
     text-align: center;
 }
 
+/* ======================== */
+/* ===== HEADER ===== */
+/* ======================== */
+
 header h1 {
-    color: #8e44ad;
+    color: #703688;
     font-size: 400%;
     letter-spacing: 1px;
     margin-top: 80px;
@@ -40,6 +45,10 @@ header h1:after {
     margin: 0 auto;
     margin-top: 25px;
 }
+
+/* ======================== */
+/* ===== SECTION SEARCH ===== */
+/* ======================== */
 
 .section-search {
     margin-bottom: 30px;
@@ -71,12 +80,3 @@ header h1:after {
 .search-input:focus {
     outline: none;
 }
-
-/* .search-icon {
-    color: #8e44ad;
-    font-size: 140%;
-    position: absolute;
-    top: 8%;
-    right: 36%;
-    vertical-align: middle;
-} */
