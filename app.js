@@ -73,5 +73,47 @@ const UIController = (() => {
     const domStrings = {
         searchInput: '.search-input',
         resultSec: '.section-result'
+    };
+
+    function clearFields() {
+        document.querySelector(domStrings.searchInput).value = '';
+    };
+
+    function createResultBox(valueObj) {
+        return `<div class="row">
+                    <div class="result-box clearfix">
+                        <h2>Details:</h2>
+                        <div class="result-box_left">
+                            <h3>${valueObj.symbol}</h3>
+                            <p class="result-box_price">${valueObj.value}</p>
+                        </div>
+                        <div class="result-box_right">
+                            <i class="far fa-star"></i>
+                            <i class="far fa-bell"></i>
+                        </div>                  
+                    </div>
+                </div>`
+    };
+
+    function showResultBox(htmlTextToShow) {
+        document.querySelector(domStrings.resultSec).innerHTML = '';
+        document.querySelector(domStrings.resultSec).insertAdjacentHTML('beforeend', htmlTextToShow);
+    }
+
+    return {
+        getInputValue: () => {
+            const searchValue = document.querySelector(domStrings.searchInput).value;
+            clearFields();
+            if (searchValue) {
+                console.log(searchValue);
+                return searchValue;
+            }
+        },
+
+        // Callback for the ajax request
+        updateResultSection: (valueObj) => {
+            const htmlStruct = createResultBox(valueObj);
+            showResultBox(htmlStruct);
+        }
     }
 })();
