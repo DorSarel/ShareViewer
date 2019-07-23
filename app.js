@@ -1,18 +1,6 @@
 /*
 TBD:
-
-1. Controller
-    - Setup event listeners
-    - Wrap search call
-2. UIController
-    - Get input value (event)
-    - Create 'result' div
-    - Update UI
-3. AjaxController
-    - Send the correct request
-        - Send request to find company symbol by name
-        - Send request with symbol to get daily close
-    - Parse the response
+Setup notify event
 4. DBController
 */
 
@@ -88,7 +76,6 @@ const UIController = (() => {
                             <p class="result-box_price">${valueObj.value}</p>
                         </div>
                         <div class="result-box_right">
-                            <i class="far fa-star"></i>
                             <i class="far fa-bell"></i>
                         </div>                  
                     </div>
