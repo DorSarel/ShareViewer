@@ -16,7 +16,7 @@ TBD:
 4. DBController
 */
 
-const ajaxCtrl = (() => {
+const ajaxController = (() => {
     const API_KEY = 'AEKR5Q5SXFI5FS4O';
 
     // Return Value: Company price
@@ -104,16 +104,46 @@ const UIController = (() => {
         getInputValue: () => {
             const searchValue = document.querySelector(domStrings.searchInput).value;
             clearFields();
-            if (searchValue) {
-                console.log(searchValue);
-                return searchValue;
-            }
+            return searchValue;
         },
 
         // Callback for the ajax request
         updateResultSection: (valueObj) => {
             const htmlStruct = createResultBox(valueObj);
             showResultBox(htmlStruct);
-        }
+        },
+
+        getDomStrings: () => domStrings
     }
 })();
+
+const controller = ((uICtrl, ajaxCtrl) => {
+
+    const domStrings = uICtrl.getDomStrings();
+
+    function getShareInfo() {
+        const searchValue = uICtrl.getInputValue();
+
+        if (searchValue) {
+            ajaxCtrl.getCompanyValue(searchValue, uICtrl.updateResultSection);
+        }
+    }
+    
+    function setupEventListeners() {
+        document.addEventListener('keypress', (event) => {
+            if (event.keyCode === 13 || event.which === 13) {
+                getShareInfo();
+            }
+        });
+    }
+
+
+    return {
+        Init: () => {
+            setupEventListeners();
+        }
+    }
+
+})(UIController, ajaxController);
+
+controller.Init();
