@@ -20,64 +20,58 @@ const ajaxCtrl = (() => {
     const API_KEY = 'AEKR5Q5SXFI5FS4O';
 
     // Return Value: Company price
-    function sendReqBySymbol(symbol) {
-        const promiseValue = fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=1&apikey=${API_KEY}`)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            const today = new Date();
-            const month = (today.getMonth() >= 10) ? today.getMonth() + 1 : `0${today.getMonth() + 1}`;
-            const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
-
+    async function sendReqBySymbol(symbol) {
+        try {
+            const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`);
+            const data = await response.json();
+            const lastRefreshed = data["Meta Data"]["3. Last Refreshed"];
+    
             const daily = 'Time Series (Daily)';
             const price = '4. close';
             
-            return new Promise((resolve, reject) => {
-                if (data[daily][todayFormatted][price]) {
-                    resolve(data[daily][todayFormatted][price]);
-                }
-                reject('Error!!!');
-            });
-        })
-        .catch(error => console.log(error["Error Message"]));
-        return promiseValue;
+            return {
+                value: data[daily][lastRefreshed][price],
+                symbol
+            };
+        } catch (error) {
+            throw {
+                errorMsg: `Failed to retrieve share data for company symbol ${symbol}`
+            };
+        }
     }
 
     // Return Value: Company Symbol
-    function sendReqByName(compName) {
-        const promiseAns = fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${compName}&apikey=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => {
-            return new Promise((resolve, reject) => {
-                if (data.bestMatches["0"]["1. symbol"]) {
-                    resolve(data.bestMatches["0"]["1. symbol"]);
-                }
-                reject(`Failed to retrieve company symbol for ${compName}`);
-            });
-        })
-        .catch(error => console.log(error["Error Message"]));
-        return promiseAns;
+    async function sendReqByName(compName) {
+        try {
+            const response = await fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${compName}&apikey=${API_KEY}`)
+            const data = await response.json();
+            return data.bestMatches[0]["1. symbol"];
+        } catch (error) {
+            throw {
+                errorMsg: `Failed to retrieve share data for ${compName}`
+            };
+        }
     }
 
-    return {
-        // test: () => {
-        //     sendReqByName('Western Di')
-        //     .then(symbol => {
-        //         return sendReqBySymbol(symbol);
-        //     })
-        //     .then(value => console.log(value))
-        //     .catch(error => console.log(error));
-        // },
 
-        getCompanyValue: (compName) => {
+    return {
+        getCompanyValue: (compName, callback) => {
             sendReqByName(compName)
             .then(symbol => {
                 return sendReqBySymbol(symbol);
             })
-            .then(value => console.log(value))
-            .catch(error => console.log(error));
+            .then(value => {
+                callback(value);
+            })
+            .catch(error => console.log(error.errorMsg));
         }
     }
 
+})();
+
+const UIController = (() => {
+    const domStrings = {
+        searchInput: '.search-input',
+        resultSec: '.section-result'
+    }
 })();
